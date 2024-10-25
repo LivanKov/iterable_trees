@@ -2,22 +2,15 @@
 #include <iostream>
 #include <vector>
 
-
-
 int main()
 {
-    Tree<int> t{};
-    t.insert(5);
-    std::cout << t.height <<std::endl;
-    t.insert(3);
-    std::cout << t.height << std::endl;
-    t.insert(8);
-    std::cout << t.height << std::endl;
-    t.insert(1);
-    std::cout << t.height << std::endl;
-    t.insert(9);
-    std::cout << t.height << std::endl;
-    t.insert(17);
-    std::cout << t.height << std::endl;
-    std::cout << t << std::endl;
+    Tree<std::pair<int,int>> t{};
+
+    t.emplace(1,2);
+    t.emplace(2,4);
+    t.emplace(3,8);
+
+    std::pair<int,int>f{45,8};
+    std::cout << f << std::endl;
+    
 }

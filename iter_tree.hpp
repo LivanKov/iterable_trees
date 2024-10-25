@@ -53,11 +53,18 @@ public:
 
     auto insert(T val) -> void
     {
-        write_value(val);
+        write_value(std::move(val));
+    }
+
+    template <typename... Args>
+        requires std::constructible_from<T, Args...>
+    auto emplace(Args&& ...args)
+    {
+        write_value(T{std::forward<Args>(args)...});
     }
 
 private:
-    auto write_value(T val) -> void
+    auto write_value(T&& val) -> void
     {
         if (!root)
         {
