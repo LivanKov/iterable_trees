@@ -5,6 +5,11 @@
 #include <stack>
 
 template <typename T>
+concept has_ostream = requires(T t, std::ostream &os) {
+    { os << t } -> std::same_as<std::ostream &>;
+};
+
+template <typename T>
 class Tree
 {
 
@@ -58,13 +63,13 @@ public:
 
     template <typename... Args>
         requires std::constructible_from<T, Args...>
-    auto emplace(Args&& ...args)
+    auto emplace(Args &&...args)
     {
         write_value(T{std::forward<Args>(args)...});
     }
 
 private:
-    auto write_value(T&& val) -> void
+    auto write_value(T &&val) -> void
     {
         if (!root)
         {
@@ -102,6 +107,7 @@ private:
 };
 
 template <typename T>
+    requires has_ostream<T>
 std::ostream &operator<<(std::ostream &os, const Tree<T> &tree)
 {
     std::cout << "check1" << std::endl;
