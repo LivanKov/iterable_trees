@@ -1,1 +1,0 @@
-/usr/local/bin/c++  -Wall -Wextra -pedantic -g CMakeFiles/iterable_tree.dir/main.cpp.o -o iterable_tree

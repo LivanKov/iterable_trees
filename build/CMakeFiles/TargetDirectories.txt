@@ -1,3 +1,0 @@
-/home/ivanlomakov/C++/tests/iterable_tree/build/CMakeFiles/iterable_tree.dir
-/home/ivanlomakov/C++/tests/iterable_tree/build/CMakeFiles/edit_cache.dir
-/home/ivanlomakov/C++/tests/iterable_tree/build/CMakeFiles/rebuild_cache.dir

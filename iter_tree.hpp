@@ -4,7 +4,6 @@
 #include <variant>
 #include <stack>
 
-
 template <typename T>
 class Tree
 {
@@ -52,54 +51,53 @@ public:
     template <typename U>
     friend std::ostream &operator<<(std::ostream &os, const Tree<U> &tree);
 
-    void insert(int val)
+    auto insert(T val) -> void
     {
-        Node *current = root;
-        size_t current_height = 1;
-        if (!current)
+        write_value(val);
+    }
+
+private:
+    auto write_value(T val) -> void
+    {
+        if (!root)
         {
             root = new Node(val);
-            size++;
-            height = current_height;
+            height = 1;
             return;
         }
-        for (;;)
+        size_t current_height{1};
+        Node *current = root;
+        while (current)
         {
-            if (val > current->val && current->right)
-            {
-                current = current->right;
-                current_height++;
-            }
-            else if (val < current->val && current->left)
-            {
-                current = current->left;
-                current_height++;
-            }
-            else if (val > current->val && !current->right)
-            {
-                current->right = new Node(val);
-                size++;
-                if (current_height + 1 > height)
-                    height = current_height + 1;
-                break;
-            }
-            else if (val < current->val && !current->left)
+            if (val < current->val && !(current->left))
             {
                 current->left = new Node(val);
-                size++;
-                if (current_height + 1 > height)
-                    height = current_height;
+                current_height++;
+                update_height(current_height);
                 break;
             }
+            if (val >= current->val && !(current->right))
+            {
+                current->right = new Node(val);
+                current_height++;
+                update_height(current_height);
+                break;
+            }
+            current = val < current->val ? current->left : current->right;
+            current_height++;
         }
     }
 
-    template<typename... Args>
+    auto update_height(size_t new_height) -> void
+    {
+        height = new_height > height ? new_height : height;
+    }
 };
 
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const Tree<T> &tree)
 {
+    std::cout << "check1" << std::endl;
     os << "[ ";
     std::vector<std::variant<T, char>> tree_vals((1 << tree.height) - 1, '-');
     tree.flatten_type_1(tree_vals, tree.root, 0);
